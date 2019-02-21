@@ -1,48 +1,54 @@
 'use strict';
 
 // npm modules
-const Express = require('express');
-const Config = require('config');
-const Helmet = require('helmet');
-const Compression = require('compression');
+const express = require('express');
+const config = require('config');
+const helmet = require('helmet');
+const compression = require('compression');
 require('express-async-errors'); // try / catch wrapper
 // own modules
 const {
-  NodeErrorCatcher,
-  ConfigValidate,
-  CorsHeaders,
-  Router,
-  CustomHttpErrors,
-  DbConnect,
-  ServerStart
+  nodeErrorCatcher,
+  configValidate,
+  corsHeaders,
+  router,
+  customHttpErrors,
+  dbConnect,
+  serverStart
 } = require('./init');
 
 
-// handle unhandled exceptions & rejections | validate required ENV vars
-NodeErrorCatcher();
-ConfigValidate(Config);
+// in development environment if not production
+const DEV = process.env.NODE_ENV !== 'production';
+
+// handle unhandled exceptions & rejections
+nodeErrorCatcher();
+// validate required ENV vars in DEV
+if (DEV) {
+  configValidate(config);
+}
 
 // instantiate app
-const app = Express();
+const app = express();
 
 // set security headers | compress http responses | register JSON parser
-app.use(Helmet());
-app.use(Compression());
-app.use(Express.json());
+app.use(helmet());
+app.use(compression());
+app.use(express.json());
 
 // CORS settings / headers
-CorsHeaders(app);
+corsHeaders(app);
 // register router & api routes
-Router(app);
+router(app);
 // 404 error handler - triggered if no matching routes (above)
 app.use((req, res, next) => next({ status: 404 }));
 // handle http (req / res) errors passed to 'next()' <= Express.js
-CustomHttpErrors(app);
+customHttpErrors(app);
 
 
 // connect to DB | start server AFTER DB is connected
-DbConnect(Config)
-  .then(() => ServerStart(app))
+dbConnect(config)
+  .then(() => serverStart(app))
   .catch((error) => {
     throw error;
   });
