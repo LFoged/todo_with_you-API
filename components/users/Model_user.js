@@ -22,7 +22,7 @@ const UserSchema = new Mongoose.Schema({
     type: String,
     required: 'Passwords save puppies, please use one',
     minlength: [6, 'Password must be min. 6 characters'],
-    maxlength: [80, 'Password too long'],
+    maxlength: [70, 'Password too long'],
   }
 }, {
     timestamps: true

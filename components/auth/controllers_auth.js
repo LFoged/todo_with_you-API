@@ -13,12 +13,10 @@ exports.registerUser = async (req, res, next) => {
     return next({ status: 409, message: 'User already exists' });
   }
 
-  const hashedPassword = await hashPassword(password);
-  if (!hashedPassword) {
-    return next({ status: 500, message: 'Registration failed' });
-  }
-
-  const newUser = await createUser({ email, hashedPassword });
+  const newUser = await createUser({
+    email,
+    hashedPassword: await hashPassword(password)
+  });
   if (!newUser) {
     return next({ status: 500, message: 'Registration failed' });
   }

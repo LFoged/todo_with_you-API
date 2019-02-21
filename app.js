@@ -42,7 +42,7 @@ corsHeaders(app);
 router(app);
 // 404 error handler - triggered if no matching routes (above)
 app.use((req, res, next) => next({ status: 404 }));
-// handle http (req / res) errors passed to 'next()' <= Express.js
+// handle http errors passed to 'next()' <= Express.js
 customHttpErrors(app);
 
 

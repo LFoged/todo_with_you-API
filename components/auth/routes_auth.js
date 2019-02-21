@@ -6,15 +6,18 @@ const { isLoggedIn } = require('../../middleware/auth_check');
 const { validateRegisterLogin } = require('./validate_auth');
 
 
-// receive router & define routes, using router's methods
-module.exports = (router) => {
-  // POST - '/api/auth/register' => register new user
-  router.post('/register', [isLoggedIn, validateRegisterLogin, registerUser]);
-
-  // POST - '/api/auth/login' => log user in
-  router.post('/login', [isLoggedIn, validateRegisterLogin, loginUser]);
-
-
-  // return router to register defined routes
-  return router;
-};
+// define & export array of route handlers
+module.exports = [
+  {
+    // POST - '/api/auth/register' => register new user
+    method: 'POST',
+    path: '/register',
+    handlers: [isLoggedIn, validateRegisterLogin, registerUser]
+  },
+  {
+    // POST - '/api/auth/login' => log user in
+    method: 'POST',
+    path: '/login',
+    handlers: [isLoggedIn, validateRegisterLogin, loginUser]
+  }
+];

@@ -5,7 +5,7 @@ const User = require('../users/Model_user');
 
 
 exports.createUser = async ({ email, hashedPassword }) => {
-  return (await new User({ email, password: hashedPassword })) || false;
+  return (await new User({ email, password: hashedPassword }).save()) || false;
 };
 
 
