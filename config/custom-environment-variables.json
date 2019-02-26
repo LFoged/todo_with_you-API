@@ -1,4 +1,4 @@
 {
-  "db": "todo_with_you-db",
-  "userJwtKey": "todo_with_you-userJwtSecret"
+  "db": "todo_with_you_db",
+  "userJwtKey": "todo_with_you_userJwtSecret"
 }
