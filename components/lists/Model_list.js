@@ -47,14 +47,8 @@ module.exports = mongoose.model('List', new mongoose.Schema({
     required: true,
     default: true
   },
-  canView: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'User'
-  },
-  canEdit: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'User'
-  }
+  canView: [mongoose.Schema.Types.ObjectId],
+  canEdit: [mongoose.Schema.Types.ObjectId]
 }, {
     timestamps: true
   }));

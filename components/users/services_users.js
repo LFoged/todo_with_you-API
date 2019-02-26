@@ -32,7 +32,7 @@ exports.findUser = async ({
     return (await User.findOne({ email }, projection));
   }
 
-  return (await User.findOne({ _id: id }, projection));
+  return (await User.findById(id, projection));
 };
 
 
