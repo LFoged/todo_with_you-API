@@ -5,10 +5,15 @@ const User = require('./Model_user');
 const { inDEV } = require('../../utils');
 
 
-// create (register) user in db - used by auth controller
-exports.createUser = async ({ email, hashedPassword }) => {
-  return (await new User({ email, password: hashedPassword }).save());
+// save user to db - also used to save (register) new users
+exports.saveUser = async (userObj, newUser = false) => {
+  if (newUser) {
+    return (await new User(userObj).save());
+  }
+
+  return (await userObj.save());
 };
+
 
 // get all users (only in DEV) or 1 user by id / email. Can limit returned data 
 exports.findUser = async ({
@@ -30,8 +35,6 @@ exports.findUser = async ({
   return (await User.findOne({ _id: id }, projection));
 };
 
-// save user
-exports.saveUser = async (user) => (await user.save());
 
 // delete (remove) one user
 exports.deleteUser = async (id) => (await User.findByIdAndDelete(id));

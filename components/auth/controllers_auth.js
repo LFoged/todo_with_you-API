@@ -1,7 +1,7 @@
 'use strict';
 
 // own modules
-const { createUser, findUser } = require('../users/services_users');
+const { saveUser, findUser } = require('../users/services_users');
 const { hashPassword, checkPassword } = require('../../utils');
 
 
@@ -13,13 +13,13 @@ exports.registerUser = async (req, res, next) => {
     return next({ status: 409, message: 'User already exists' });
   }
 
-  // hash password separately = no risk of 'user.password: false'
+  // hash password separately => if error here, no corrupted User data
   const hashedPassword = await hashPassword(password);
   if (!hashedPassword) {
     return next({ status: 500, message: 'Registration failed' });
   }
 
-  const newUser = await createUser({ email, hashedPassword });
+  const newUser = await saveUser({ email, password: hashedPassword }, true);
   if (!newUser) {
     return next({ status: 500, message: 'Registration failed' });
   }

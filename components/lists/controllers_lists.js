@@ -6,7 +6,7 @@ const {
   getList,
   getLists,
   mayEditList,
-  deleteOneList
+  deleteList
 } = require('./services_lists');
 
 
@@ -38,7 +38,7 @@ exports.createList = async (req, res, next) => {
 
 
 // return single list
-exports.getOneList = async (req, res, next) => {
+exports.getList = async (req, res, next) => {
   const { id } = req.userAuth;
   const { listId } = req.params;
 
@@ -99,7 +99,7 @@ exports.removeList = async (req, res, next) => {
     return res.status(404).json({ message: 'List not found' });
   }
 
-  const deletedList = await deleteOneList(list);
+  const deletedList = await deleteList(list);
   if (!deletedList) {
     return next({ status: 500, message: 'Failed to remove list' });
   }

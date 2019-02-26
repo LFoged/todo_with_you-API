@@ -6,7 +6,7 @@ const { checkPassword, hashPassword } = require('../../utils');
 
 
 // return all users - DEV route only
-exports.getUsers = async (req, res, next) => {
+exports.getAllUsers = async (req, res, next) => {
   const users = await findUser({ single: false });
   if (users.length < 1) {
     return res.status(404).json({ message: 'No users found' });

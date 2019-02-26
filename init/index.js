@@ -5,6 +5,6 @@ module.exports = {
   configValidate: require('./config_validation'),
   corsHeaders: require('./cors_headers'),
   router: require('./router'),
-  customHttpErrors: require('./errors-express_custom_http'),
+  customHttpErrors: require('./errors_custom_http'),
   dbConnect: require('./db_connect')
 };

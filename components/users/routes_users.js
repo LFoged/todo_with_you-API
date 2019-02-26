@@ -1,33 +1,41 @@
 'use strict';
 
-// npm modules
-const { Router } = require('express');
 // own modules
 const usersCtrl = require('./controllers_users');
 const objIdCheck = require('../../middleware/objId_check');
 const { validateUpdateUser } = require('../validation_common');
 const { isAuthenticated } = require('../../middleware/auth_check');
 
-// instantiate router
-const router = Router();
 
-
-// GET - '/api/users' => get all users - DEV
-router.get('/', [usersCtrl.getUsers]);
-
-// GET - '/api/users/:id' => get one user
-router.get('/:id', [objIdCheck, usersCtrl.getUser]);
-
-// PUT - '/api/users/:id' => update one user
-router.get('/:id', [
-  objIdCheck,
-  isAuthenticated,
-  validateUpdateUser,
-  usersCtrl.updateUser
-]);
-
-// DELETE - '/api/users/:id' => remove (delete) one user
-router.delete('/:id', [objIdCheck, isAuthenticated, usersCtrl.removeUser]);
-
-
-module.exports = router;
+// define & export route endpoints, methods & handlers (middleware)
+module.exports = [
+  {
+    // GET - '/api/users' => get all users - only in DEV
+    method: 'GET',
+    path: '/',
+    handlers: [usersCtrl.getAllUsers]
+  },
+  {
+    // GET - '/api/users/:id' => get one user
+    method: 'GET',
+    path: '/:id',
+    handlers: [objIdCheck, usersCtrl.getUser]
+  },
+  {
+    // PUT - '/api/users/:id' => update one user
+    method: 'PUT',
+    path: '/:id',
+    handlers: [
+      objIdCheck,
+      isAuthenticated,
+      validateUpdateUser,
+      usersCtrl.updateUser
+    ]
+  },
+  {
+    // DELETE - '/api/users/:id' => remove (delete) one user
+    method: 'DELETE',
+    path: '/:id',
+    handlers: [objIdCheck, isAuthenticated, usersCtrl.removeUser]
+  }
+];

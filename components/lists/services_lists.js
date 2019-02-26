@@ -69,4 +69,4 @@ exports.getLists = async ({ singleUser = true, id = '' }) => {
 
 
 // delete list
-exports.deleteOneList = async (listObj = {}) => (await listObj.delete()); 
+exports.deleteList = async (listObj = {}) => (await listObj.delete()); 

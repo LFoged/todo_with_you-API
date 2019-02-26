@@ -32,11 +32,9 @@ app.use(express.json());
 
 // apply CORS headers
 corsHeaders(app);
-// register router & api routes
+// register router + api routes & handle 404 (non-existent routes) errors
 router(app);
-// 404 error handler - triggered if no matching routes (above)
-app.use((req, res, next) => next({ status: 404 }));
-// custom handler for http errors passed to 'next()' <= Express.js
+// custom handler for http errors passed to 'next()' (Express.js)
 customHttpErrors(app);
 
 
