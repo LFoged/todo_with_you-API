@@ -1,5 +1,5 @@
 {
-  "name": "TODO_with_you-API",
+  "name": "todo_with_you",
   "version": "1.0.0",
   "description": "API for shareable todo / list app",
   "main": "app.js",
