@@ -8,15 +8,11 @@ const { inDEV } = require('../../utils');
 // check user permission to VIEW OR EDIT list
 const _mayAccessList = (list = {}, id = '') => {
   const { authorId, canView, canEdit } = list;
-  if (
-    (String(id) !== authorId)
-    || (!canView.includes(id))
-    || (!canEdit.includes(id))
-  ) {
-    return false;
-  }
 
-  return true;
+  return ((String(id) === authorId) ||
+    (canView.includes(id)) ||
+    (canEdit.includes(id))
+  );
 };
 
 
@@ -55,18 +51,18 @@ exports.getLists = async ({ singleUser = true, id = '' }) => {
     return (inDEV ? (await List.find({}, { updatedAt: -1 })) : false);
   }
 
-  return (
-    (id.trim().length > 0)
-      ? (await List.find({
-        $or: [
-          { authorId: id },
-          { canView: { $in: [id] } },
-          { canEdit: { $in: [id] } }
-        ]
-      }, {
-          updatedAt: -1
-        }))
-      : false
+  return ((id.trim().length > 0) ?
+    (await List.find({
+      $or: [
+        { authorId: id },
+        { canView: { $in: [id] } },
+        { canEdit: { $in: [id] } }
+      ]
+    }, {
+        updatedAt: -1
+      })
+    ) :
+    false
   );
 };
 

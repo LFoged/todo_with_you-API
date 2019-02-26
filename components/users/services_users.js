@@ -22,7 +22,7 @@ exports.findUser = async ({
   id = '',
   email = ''
 }) => {
-  const projection = limit ? { password: 0, createdAt: 0, __v: 0 } : {};
+  const projection = (limit ? { password: 0, createdAt: 0, __v: 0 } : {});
 
   if (!single) {
     return (inDEV ? (await User.find({}, projection)) : false);
