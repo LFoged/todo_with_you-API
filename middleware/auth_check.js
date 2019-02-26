@@ -1,11 +1,11 @@
 'use strict';
 
 // npm modules
-const Jwt = require('jsonwebtoken');
-const Config = require('config');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 
-// restrict access if NO valid token
+// deny access if NO valid token
 exports.isAuthenticated = (req, res, next) => {
   const token = req.header('Authorization');
   if (!token) {
@@ -13,7 +13,7 @@ exports.isAuthenticated = (req, res, next) => {
   }
 
   // use cb (callback) format to make async (Note: 'promisify' won't work)
-  Jwt.verify(token, Config.get('userJwtKey'), (error, decodedJwt) => {
+  jwt.verify(token, config.get('userJwtKey'), (error, decodedJwt) => {
     if (error || !decodedJwt) {
       return next({ status: 401 });
     }
@@ -29,14 +29,14 @@ exports.isAuthenticated = (req, res, next) => {
 };
 
 
-// restrict access if valid token (already logged in)
+// deny access if valid token (already logged in)
 exports.isLoggedIn = (req, res, next) => {
   const token = req.header('Authorization');
   if (!token) {
     return next();
   }
 
-  Jwt.verify(token, Config.get('userJwtKey'), (error, decodedJwt) => {
+  jwt.verify(token, config.get('userJwtKey'), (error, decodedJwt) => {
     if (error || !decodedJwt) {
       return next();
     }

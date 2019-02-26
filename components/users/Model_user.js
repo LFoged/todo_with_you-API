@@ -1,13 +1,13 @@
 'use strict';
 
 // npm modules
-const Mongoose = require('mongoose');
-const Jwt = require('jsonwebtoken');
-const Config = require('config');
-const UniqueValidator = require('mongoose-unique-validator');
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const uniqueValidator = require('mongoose-unique-validator');
 
 // define User schema
-const UserSchema = new Mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: 'Email address required',
@@ -30,7 +30,7 @@ const UserSchema = new Mongoose.Schema({
 
 
 // register plugin to get proper errors from Mongo on 'unique' violation
-UserSchema.plugin(UniqueValidator);
+UserSchema.plugin(uniqueValidator);
 
 // define method for creating auth token (JWT) on User schema
 UserSchema.methods.createAuthToken = function () {
@@ -38,9 +38,9 @@ UserSchema.methods.createAuthToken = function () {
 
   // use Promise format to make jwt.sign async (Note: 'promisify' won't work)
   return new Promise((resolve, reject) => {
-    Jwt.sign(
+    jwt.sign(
       payload,
-      Config.get('userJwtKey'),
+      config.get('userJwtKey'),
       { expiresIn: '2h' },
       (error, encodedJwt) => {
         if (error) {
@@ -54,4 +54,4 @@ UserSchema.methods.createAuthToken = function () {
 
 
 // model User schema & export
-module.exports = Mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);
