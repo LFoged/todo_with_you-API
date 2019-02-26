@@ -13,7 +13,10 @@ const {
 // return all lists - only in DEV
 exports.getAllLists = async (req, res, next) => {
   const lists = await getLists({ singleUser: false });
-  if (!lists || lists.length < 1) {
+  if (!lists) {
+    return next({ status: 400, message: 'Invalid URL path' })
+  }
+  if (lists.length < 1) {
     return res.status(404).json({ message: 'No lists found' });
   }
 

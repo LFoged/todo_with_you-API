@@ -5,9 +5,12 @@ const { findUser, saveUser, deleteUser } = require('./services_users');
 const { checkPassword, hashPassword } = require('../../utils');
 
 
-// return all users - DEV route only
+// return all users - only in DEV. If !DEV, send obscure error msg 
 exports.getAllUsers = async (req, res, next) => {
   const users = await findUser({ single: false });
+  if (!users) {
+    return next({ status: 400, message: 'Invalid URL path' });
+  }
   if (users.length < 1) {
     return res.status(404).json({ message: 'No users found' });
   }

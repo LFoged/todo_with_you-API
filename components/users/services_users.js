@@ -24,15 +24,17 @@ exports.findUser = async ({
 }) => {
   const projection = limit ? { password: 0, createdAt: 0, __v: 0 } : {};
 
-  if (!single && inDEV) {
-    return (await User.find({}, projection));
+  if (!single) {
+    return (inDEV ? (await User.find({}, projection)) : false);
   }
 
-  if (email.length > 1) {
+  if (email.trim().length > 0) {
     return (await User.findOne({ email }, projection));
   }
 
-  return (await User.findById(id, projection));
+  return (
+    (id.trim().length > 0) ? (await User.findById(id, projection)) : false
+  );
 };
 
 

@@ -51,22 +51,25 @@ exports.getList = async ({ listId = '', id = '' }) => {
 
 // get multiple lists by user's id - check access - can get all in DEV 
 exports.getLists = async ({ singleUser = true, id = '' }) => {
-  if (!singleUser && !id && inDEV) {
-    return (await List.find({}, { updatedAt: -1 }));
+  if (!singleUser) {
+    return (inDEV ? (await List.find({}, { updatedAt: -1 })) : false);
   }
-  console.log('test')
 
   return (
-    await List.find({
-      $or: [
-        { authorId: id }, { canView: { $in: [id] } }, { canEdit: { $in: [id] } }
-      ]
-    }, {
-        updatedAt: -1
-      })
+    (id.trim().length > 0)
+      ? (await List.find({
+        $or: [
+          { authorId: id },
+          { canView: { $in: [id] } },
+          { canEdit: { $in: [id] } }
+        ]
+      }, {
+          updatedAt: -1
+        }))
+      : false
   );
 };
 
 
 // delete list
-exports.deleteList = async (listObj = {}) => (await listObj.delete()); 
+exports.deleteList = async (listObj) => (await listObj.delete()); 
