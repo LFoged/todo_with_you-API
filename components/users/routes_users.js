@@ -3,8 +3,8 @@
 // own modules
 const usersCtrl = require('./controllers_users');
 const objIdCheck = require('../../middleware/objId_check');
-const { validateUpdateUser } = require('../validation_common');
 const { isAuthenticated } = require('../../middleware/auth_check');
+const { validateUpdateUser } = require('../../middleware/validation_common');
 
 
 // define & export route endpoints, methods & handlers (middleware)

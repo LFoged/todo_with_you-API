@@ -7,7 +7,7 @@ const { isAuthenticated } = require('../../middleware/auth_check');
 const {
   validateCreateList,
   validateUpdateList
-} = require('../validation_common');
+} = require('../../middleware/validation_common');
 
 
 // define & export route endpoints, methods & handlers (middleware)

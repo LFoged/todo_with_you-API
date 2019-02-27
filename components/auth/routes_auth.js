@@ -3,7 +3,7 @@
 // own modules
 const { registerUser, loginUser } = require('./controllers_auth');
 const { isLoggedIn } = require('../../middleware/auth_check');
-const { validateRegisterLogin } = require('../validation_common');
+const { validateRegisterLogin } = require('../../middleware/validation_common');
 
 
 // define & export route endpoints, methods & handlers (middleware)
