@@ -23,7 +23,7 @@ module.exports = mongoose.model('List', new mongoose.Schema({
     type: String,
     required: 'Title required',
     minlength: [1, 'Title must be min. 1 character'],
-    maxlength: [30, 'Title must be max. 30 characters'],
+    maxlength: [50, 'Title must be max. 50 characters'],
     trim: true
   },
   body: {
@@ -42,13 +42,17 @@ module.exports = mongoose.model('List', new mongoose.Schema({
       message: 'Max. 6 tags per list'
     }
   },
-  isPrivate: {
+  isPublic: {
     type: Boolean,
     required: true,
-    default: true
+    default: false
   },
-  canView: [mongoose.Schema.Types.ObjectId],
-  canEdit: [mongoose.Schema.Types.ObjectId]
+  canView: {
+    type: [mongoose.Schema.Types.ObjectId],
+  },
+  canEdit: {
+    type: [mongoose.Schema.Types.ObjectId]
+  },
 }, {
     timestamps: true
   }));

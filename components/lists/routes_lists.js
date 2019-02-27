@@ -4,6 +4,10 @@
 const listsCtrl = require('./controllers_lists');
 const objIdCheck = require('../../middleware/objId_check');
 const { isAuthenticated } = require('../../middleware/auth_check');
+const {
+  validateCreateList,
+  validateUpdateList
+} = require('../validation_common');
 
 
 // define & export route endpoints, methods & handlers (middleware)
@@ -12,7 +16,7 @@ module.exports = [
     // POST - '/api/lists' => create new list
     method: 'POST',
     path: '/',
-    handlers: [isAuthenticated, listsCtrl.createList]
+    handlers: [isAuthenticated, validateCreateList, listsCtrl.createList]
   },
   {
     // GET - '/api/lists' => get all lists - only in DEV
@@ -36,7 +40,12 @@ module.exports = [
     // PUT - '/api/lists/:listId' => update one list
     method: 'PUT',
     path: '/:listId',
-    handlers: [objIdCheck, isAuthenticated, listsCtrl.updateList]
+    handlers: [
+      objIdCheck,
+      isAuthenticated,
+      validateUpdateList,
+      listsCtrl.updateList
+    ]
   },
   {
     // DELETE - '/api/lists/:listId' => remove (delete) one list

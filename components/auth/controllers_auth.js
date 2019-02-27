@@ -24,6 +24,7 @@ exports.registerUser = async (req, res, next) => {
     return next({ status: 500, message: 'Registration failed' });
   }
 
+  // still successfully registered if here, despite token fail
   const authToken = await newUser.createAuthToken();
   if (typeof authToken !== 'string') {
     return res.status(201).json({ message: 'Registered! Please log in' });

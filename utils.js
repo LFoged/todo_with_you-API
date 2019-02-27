@@ -1,6 +1,6 @@
 'use strict';
 
-/* group util functions in single file for now (v. few needed in app) */
+/* Group util functions in single file for now (v. few needed in app) */
 
 // npm modules
 const bcrypt = require('bcryptjs');
