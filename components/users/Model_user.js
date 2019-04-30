@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: 'Passwords save puppies, please use one',
     minlength: [6, 'Password must be min. 6 characters'],
-    maxlength: [70, 'Password too long'],
+    maxlength: [70, 'Password too long']
   }
 }, {
     timestamps: true
@@ -44,9 +44,9 @@ UserSchema.methods.createAuthToken = function () {
       { expiresIn: '2h' },
       (error, encodedJwt) => {
         if (error) {
-          reject(error);
+          return reject(error);
         }
-        resolve(encodedJwt);
+        return resolve(encodedJwt);
       }
     );
   });

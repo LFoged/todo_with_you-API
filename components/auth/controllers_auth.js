@@ -42,11 +42,7 @@ exports.loginUser = async (req, res, next) => {
 
   // send obscure fail message on wrong email / password
   const user = await findUser({ email, limit: false });
-  if (!user) {
-    return next({ status: 401 });
-  }
-
-  if (!await checkPassword(password, user.password)) {
+  if (!user || !(await checkPassword(password, user.password))) {
     return next({ status: 401 });
   }
 
